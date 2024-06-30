@@ -1,0 +1,42 @@
+<html >
+<head>
+  <title>Load XML Data with AJAX</title>
+</head>
+<body>
+  <h1>List of Books</h1>
+  <ul id="bookList"></ul>
+
+  <script>
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "books.xml", true);
+    xhr.responseType = "document";
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState ==4 &&xhr.status == 200) {
+          var xmlDoc = xhr.responseXML;
+          displayBooks(xmlDoc);
+        }
+    };
+    xhr.send();
+
+    function displayBooks(xmlDoc) {
+      var books = xmlDoc.getElementsByTagName("book");
+      var bookList = document.getElementById("bookList");
+      var html = "";
+
+      for (var i = 0; i < books.length; i++) {
+        var title = books[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
+        var author = books[i].getElementsByTagName("author")[0].childNodes[0].nodeValue;
+        var year = books[i].getElementsByTagName("year")[0].childNodes[0].nodeValue;
+        var price = books[i].getElementsByTagName("price")[0].childNodes[0].nodeValue;
+
+        html += "<li><strong>Title:</strong> " + title + "<br>";
+        html += "<strong>Author:</strong> " + author + "<br>";
+        html += "<strong>Year:</strong> " + year + "<br>";
+        html += "<strong>Price:</strong> $" + price + "</li><br>";
+      }
+
+      bookList.innerHTML = html;
+    }
+  </script>
+</body>
+</html>

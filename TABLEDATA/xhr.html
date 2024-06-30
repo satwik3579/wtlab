@@ -1,0 +1,41 @@
+<html>
+<head>
+    <title>AJAX with XML Response</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<h2>AJAX with XML Response</h2>
+<button type="button" onclick="loadDoc()">Get Student Data</button>
+<br><br>
+<table id="resultlist">
+</table>
+<script>
+function loadDoc() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "student.xml", true);
+    xhr.responseType = "document";
+    xhr.send();
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            var xmlDoc = this.responseXML;
+            var students = xmlDoc.getElementsByTagName("student");
+            var output = "<tr><th>Name</th><th>Age</th><th>Major</th></tr>";
+            for (var i = 0; i < students.length; i++) {
+                var name = students[i].getElementsByTagName("name")[0].childNodes[0].nodeValue;
+                var age = students[i].getElementsByTagName("age")[0].childNodes[0].nodeValue;
+                var major = students[i].getElementsByTagName("major")[0].childNodes[0].nodeValue;
+                output += "<tr><td>" + name + "</td><td>" + age + "</td><td>" + major + "</td></tr>";
+            }
+            document.getElementById("resultlist").innerHTML += output;
+        } 
+    };
+}
+</script> </body> </html>

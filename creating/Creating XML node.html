@@ -1,0 +1,51 @@
+<html>
+<body>
+  <h1>List of headings</h1>
+  <p id="demo"></p>
+
+  <script>
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        modifyXML(this);
+      }
+    };
+    xhttp.open("GET", "books.xml", true);
+    xhttp.send();
+
+    function modifyXML(xml) {
+      var xmlDoc = xml.responseXML;
+
+      // Create a new book element
+      var newBook = xmlDoc.createElement("book");
+      newBook.setAttribute("id", "3");
+
+      var newTitle = xmlDoc.createElement("title");
+      var newTitleText = xmlDoc.createTextNode("The Catcher in the Rye");
+      newTitle.appendChild(newTitleText);
+      newBook.appendChild(newTitle);
+
+      var newAuthor = xmlDoc.createElement("author");
+      var newAuthorText = xmlDoc.createTextNode("J.D. Salinger");
+      newAuthor.appendChild(newAuthorText);
+      newBook.appendChild(newAuthor);
+
+      xmlDoc.documentElement.appendChild(newBook);
+
+      // Now display the updated XML
+      displayTitles(xmlDoc);
+    }
+    //Display the titles in the modified XML document
+    function displayTitles(xmlDoc) {
+      var x, i, txt;
+      txt = "";
+      x = xmlDoc.getElementsByTagName("title");
+      for (i = 0; i < x.length; i++) {
+        txt += x[i].childNodes[0].nodeValue + "<br>";
+      }
+      document.getElementById("demo").innerHTML = txt;
+    }
+  </script>
+
+</body>
+</html>

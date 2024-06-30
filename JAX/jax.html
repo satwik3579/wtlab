@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="demo">the msg will come here</p>
+    <button type="submit" onclick="loaddata()">click</button>
+    
+    <script>
+        function loaddata(){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            // Typical action to be performed when the document is ready:
+            document.getElementById("demo").innerHTML = xhttp.responseText;
+                }
+            };
+            xhttp.open("GET", "data.txt", false);
+            xhttp.send();
+        }
+    </script>
+</body>
+</html>

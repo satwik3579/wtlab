@@ -1,0 +1,27 @@
+<html>
+<body>
+<h1>List of headings</h1>
+<p id="demo"></p>
+<script>
+    var xhttp = new XMLHttpRequest(); 
+    xhttp.open("GET", "books.xml", true);
+    xhttp.send();
+    xhttp.onload = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myFunction(this); 
+        }
+    };
+    function myFunction(xml) {
+        var x, i, txt, xmlDoc;
+        xmlDoc = xml.responseXML;
+        txt = "";
+        //Retrieving data under title tag
+        x = xmlDoc.getElementsByTagName("title");
+        for (i=0;i< x.length;i++){
+            txt += x[i].childNodes[0].nodeValue + "<br>";
+        }
+        document.getElementById("demo").innerHTML = txt;
+    }
+</script>
+</body>
+</html>
